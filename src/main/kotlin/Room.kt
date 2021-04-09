@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent
 
+
 class Room(var width: Int, var height: Int, private var snake: Snake) {
     var mouse: Mouse = Mouse(0, 0)
 
@@ -20,7 +21,7 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
                     KeyEvent.VK_DOWN -> snake.direction = SnakeDirection.DOWN
                 }
             }
-            snake.move()
+            snake.selectMove()
             print()
             sleep()
         }
@@ -36,12 +37,12 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
             matrix[y][x] = 1
         }
 
-        matrix[snake.y][snake.x] = if (snake.isAlive) 2 else 4
+        matrix[sections[0].y][sections[0].x] = if (snake.isAlive) 2 else 4
 
         matrix[mouse.y][mouse.x] = 3
 
 
-        val symbols = arrayOf(" . ", " x ", " X ", "^_^", "RIP")
+        val symbols = arrayOf(" . ", " o ", " O ", "^_^", "RIP")
         for (y in 0 until height) {
             for (x in 0 until width) {
                 print(symbols[matrix[y][x]])
