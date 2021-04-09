@@ -1,6 +1,6 @@
 import java.awt.event.KeyEvent
 
-class Room(var width: Int, var height: Int, var snake: Snake) {
+class Room(var width: Int, var height: Int, private var snake: Snake) {
     var mouse: Mouse = Mouse(0, 0)
 
     fun run() {
@@ -38,7 +38,7 @@ class Room(var width: Int, var height: Int, var snake: Snake) {
 
         matrix[snake.y][snake.x] = if (snake.isAlive) 2 else 4
 
-        matrix[mouse!!.y][mouse!!.x] = 3
+        matrix[mouse.y][mouse.x] = 3
 
 
         val symbols = arrayOf(" . ", " x ", " X ", "^_^", "RIP")

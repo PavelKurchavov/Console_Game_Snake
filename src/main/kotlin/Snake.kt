@@ -1,5 +1,5 @@
 class Snake(val x: Int, val y: Int) {
-    var direction: SnakeDirection? = null
+    var direction: SnakeDirection = SnakeDirection.DOWN
     var isAlive: Boolean = true
     var sections = arrayListOf(SnakeSection(x, y))
 
@@ -17,25 +17,20 @@ class Snake(val x: Int, val y: Int) {
         var head: SnakeSection = sections[0]
         head = SnakeSection(head.x + dx, head.y + dy)
 
-        checkBorders(head)
-        if(!isAlive) return
+        with(head) {
+            checkBorders(this)
+            checkBody(this)
+            if (!isAlive) return
 
-        checkBody(head)
-        if(!isAlive) return
+            val mouse: Mouse = game.mouse
+            sections.add(0, this)
+            if (x == mouse.x && y == mouse.y) game.eatMouse() else sections.removeLast()
 
-        val mouse: Mouse = game.mouse
-        if(head.x == mouse.x && head.y == mouse.y) {
-            sections.add(0, head)
-            game.eatMouse()
-        } else {
-            sections.add(0, head)
-            sections.removeLast()
         }
     }
 
     private fun checkBorders(head: SnakeSection) {
-        if((head.x < 0 || head.x >= game.width) ||
-           head.y < 0 || head.y >= game.height) isAlive = false
+        if((head.x < 0 || head.x >= game.width) || head.y < 0 || head.y >= game.height) isAlive = false
     }
 
     private fun checkBody(head: SnakeSection) {
