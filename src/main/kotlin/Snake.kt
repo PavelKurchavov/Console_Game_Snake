@@ -8,7 +8,7 @@ class Snake(x: Int, y: Int, var direction: SnakeDirection = SnakeDirection.DOWN)
         fun move(dx: Int, dy: Int) {
 
             fun checkAlive(head: SnakeSection) {
-                if((head.x < 0 || head.x >= game.width) || head.y < 0 || head.y >= game.height || sections.contains(head)) isAlive = false
+                if(head.x < 0 || head.x >= game.width || head.y < 0 || head.y >= game.height || sections.contains(head)) isAlive = false
             }
 
             var head: SnakeSection = sections[0]
