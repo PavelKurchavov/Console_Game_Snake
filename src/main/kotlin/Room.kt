@@ -2,7 +2,7 @@ import java.awt.event.KeyEvent
 
 
 class Room(var width: Int, var height: Int, private var snake: Snake) {
-    var mouse: Mouse = Mouse(0, 0)
+    lateinit var mouse: Mouse
 
     fun run() {
         val keyboardObserver = KeyboardObserver()

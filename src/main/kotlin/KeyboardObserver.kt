@@ -11,7 +11,7 @@ import kotlin.system.exitProcess
 
 class KeyboardObserver : Thread() {
     private val keyEvents: Queue<KeyEvent> = ArrayBlockingQueue(100)
-    private var frame = JFrame("KeyPress Tester")
+    private lateinit var frame: JFrame
     override fun run() {
         frame = JFrame("KeyPress Tester")
         frame.title = "Transparent JFrame Demo"
