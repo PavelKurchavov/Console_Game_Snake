@@ -72,3 +72,6 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
     }
 
 }
+
+operator fun Room.contains(head: SnakeSection) = head.x in 0 until game.width && head.y in 0 until game.height
+
