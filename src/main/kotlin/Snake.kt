@@ -8,7 +8,8 @@ class Snake(x: Int, y: Int, var direction: SnakeDirection = SnakeDirection.DOWN)
         fun move(dx: Int, dy: Int) {
 
             fun checkAlive(head: SnakeSection) {
-                if(head.x < 0 || head.x >= game.width || head.y < 0 || head.y >= game.height || sections.contains(head)) isAlive = false
+                if(head.x < 0 || head.x >= game.width ||
+                    head.y < 0 || head.y >= game.height || head in sections) isAlive = false
             }
 
             var head: SnakeSection = sections[0]
@@ -16,7 +17,7 @@ class Snake(x: Int, y: Int, var direction: SnakeDirection = SnakeDirection.DOWN)
             checkAlive(head)
             if (!isAlive) return
             sections.add(0, head)
-            if (head.x == game.mouse.x && head.y == game.mouse.y) game.eatMouse() else sections.removeLast()
+            if (head.x == game.mouse.x && head.y == game.mouse.y) eatMouse() else sections.removeLast()
         }
 
         when (direction) {
@@ -25,6 +26,10 @@ class Snake(x: Int, y: Int, var direction: SnakeDirection = SnakeDirection.DOWN)
             SnakeDirection.DOWN -> move(0, 1)
             SnakeDirection.LEFT -> move(-1, 0)
         }
+    }
+
+    private fun eatMouse() {
+        game.createMouse()
     }
 
 

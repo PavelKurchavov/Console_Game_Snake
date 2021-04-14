@@ -54,10 +54,6 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
         println()
     }
 
-    fun eatMouse() {
-        createMouse()
-    }
-
     fun createMouse() {
         val x = (Math.random() * width).toInt()
         val y = (Math.random() * height).toInt()
