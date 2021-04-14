@@ -5,44 +5,44 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
     lateinit var mouse: Mouse
 
     fun run() {
-        val keyboardObserver = KeyboardObserver()
-        keyboardObserver.start()
+        try {
+            val keyboardObserver = KeyboardObserver()
+            keyboardObserver.start()
 
-        while (snake.isAlive) {
-            if (keyboardObserver.hasKeyEvents()) {
-                val event = keyboardObserver.eventFromTop
+            while (snake.isAlive) {
+                if (keyboardObserver.hasKeyEvents()) {
+                    val event = keyboardObserver.eventFromTop
 
-                if (event.keyChar == 'q') return
+                    if (event.keyChar == 'q') return
 
-                when (event.keyCode) {
-                    KeyEvent.VK_LEFT -> snake.direction = SnakeDirection.LEFT
-                    KeyEvent.VK_RIGHT -> snake.direction = SnakeDirection.RIGHT
-                    KeyEvent.VK_UP -> snake.direction = SnakeDirection.UP
-                    KeyEvent.VK_DOWN -> snake.direction = SnakeDirection.DOWN
+                    when (event.keyCode) {
+                        KeyEvent.VK_LEFT -> snake.direction = SnakeDirection.LEFT
+                        KeyEvent.VK_RIGHT -> snake.direction = SnakeDirection.RIGHT
+                        KeyEvent.VK_UP -> snake.direction = SnakeDirection.UP
+                        KeyEvent.VK_DOWN -> snake.direction = SnakeDirection.DOWN
+                    }
                 }
+                snake.move()
+                print()
+                sleep()
             }
-            snake.selectMove()
-            print()
-            sleep()
-        }
-
+        } catch (e: ArrayIndexOutOfBoundsException) { snake.isAlive = false }
         println("Game Over!")
     }
 
     private fun print() {
         val matrix = Array(height) { IntArray(width) }
+        val sections = snake.sections
+        val symbols = arrayOf(" . ", " o ", " O ", "^_^", "RIP")
 
-        val sections = ArrayList(snake.sections)
         for ((x, y) in sections) {
             matrix[y][x] = 1
         }
 
-        matrix[sections[0].y][sections[0].x] = if (snake.isAlive) 2 else 4
+        matrix[sections.first().y][sections.first().x] = if (snake.isAlive) 2 else 4
 
         matrix[mouse.y][mouse.x] = 3
 
-
-        val symbols = arrayOf(" . ", " o ", " O ", "^_^", "RIP")
         for (y in 0 until height) {
             for (x in 0 until width) {
                 print(symbols[matrix[y][x]])
@@ -54,11 +54,7 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
         println()
     }
 
-    fun createMouse() {
-        val x = (Math.random() * width).toInt()
-        val y = (Math.random() * height).toInt()
-        mouse = Mouse(x, y)
-    }
+    fun createMouse() = Mouse((Math.random() * width).toInt(), (Math.random() * height).toInt()).also { mouse = it }
 
     private fun sleep() {
         try {
@@ -73,5 +69,4 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
 
 }
 
-operator fun Room.contains(head: SnakeSection) = head.x in 0 until game.width && head.y in 0 until game.height
 
