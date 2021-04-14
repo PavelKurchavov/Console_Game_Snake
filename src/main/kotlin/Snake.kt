@@ -1,6 +1,8 @@
-class Snake(x: Int, y: Int, var direction: SnakeDirection = SnakeDirection.DOWN) {
+import SnakeDirection.*
+
+class Snake(var direction: SnakeDirection = DOWN) {
     var isAlive: Boolean = true
-    var sections = arrayListOf(SnakeSection(x, y))
+    var sections = arrayListOf(SnakeSection(1, 1))
 
     fun move() {
         fun move(dx: Int, dy: Int) {
@@ -14,15 +16,22 @@ class Snake(x: Int, y: Int, var direction: SnakeDirection = SnakeDirection.DOWN)
         }
 
         when (direction) {
-            SnakeDirection.UP -> move(0, -1)
-            SnakeDirection.RIGHT -> move(1, 0)
-            SnakeDirection.DOWN -> move(0, 1)
-            SnakeDirection.LEFT -> move(-1, 0)
+            UP -> move(0, -1)
+            RIGHT -> move(1, 0)
+            DOWN -> move(0, 1)
+            LEFT -> move(-1, 0)
         }
     }
 
     private fun eatMouse() {
         game.createMouse()
     }
+}
+
+enum class SnakeDirection {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
 }
 

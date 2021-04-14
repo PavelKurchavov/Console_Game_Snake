@@ -1,5 +1,5 @@
 import java.awt.event.KeyEvent
-
+import SnakeDirection.*
 
 class Room(var width: Int, var height: Int, private var snake: Snake) {
     lateinit var mouse: Mouse
@@ -15,11 +15,13 @@ class Room(var width: Int, var height: Int, private var snake: Snake) {
 
                     if (event.keyChar == 'q') return
 
-                    when (event.keyCode) {
-                        KeyEvent.VK_LEFT -> snake.direction = SnakeDirection.LEFT
-                        KeyEvent.VK_RIGHT -> snake.direction = SnakeDirection.RIGHT
-                        KeyEvent.VK_UP -> snake.direction = SnakeDirection.UP
-                        KeyEvent.VK_DOWN -> snake.direction = SnakeDirection.DOWN
+                    with(snake) {
+                        when (event.keyCode) {
+                            KeyEvent.VK_LEFT -> direction = LEFT
+                            KeyEvent.VK_RIGHT -> direction = RIGHT
+                            KeyEvent.VK_UP -> direction = UP
+                            KeyEvent.VK_DOWN -> direction = DOWN
+                        }
                     }
                 }
                 snake.move()
